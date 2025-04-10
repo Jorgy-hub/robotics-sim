@@ -19,9 +19,12 @@ let D = 0;
 export default function Field() {
     const canvasRef = useRef(null);
     const [mousePosition, setMousePosition] = useState({ x: fieldWidth/2, y: fieldHeight/2 });
-
-    const updateMousePosition = (e: { clientX: number; clientY: number; }) => setMousePosition({ x: e.clientX, y: e.clientY });
-
+    
+    const updateMousePosition = (e: { clientX: number; clientY: number; }) => {
+        let rect = canvasRef.current.getBoundingClientRect();
+        setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    }
+    
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -51,5 +54,5 @@ export default function Field() {
         ctx.closePath();
     }, [mousePosition]);
 
-    return <canvas ref={canvasRef} width={fieldWidth} height={fieldHeight} className="container" onMouseMove={updateMousePosition}></canvas>
+    return <canvas ref={canvasRef} width={fieldWidth} height={fieldHeight} className="cursor-none" onMouseMove={updateMousePosition}></canvas>
 }

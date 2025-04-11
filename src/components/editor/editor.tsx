@@ -2,10 +2,17 @@
 
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
-import { useState, useCallback, SetStateAction } from 'react';
+import { useState, useCallback, SetStateAction, Dispatch } from 'react';
 import { material } from '@uiw/codemirror-theme-material';
-export default function Editor() {
-    const [value, setValue] = useState("console.log('hello world!');");
+
+interface EditorProps {
+    setValue: Dispatch<SetStateAction<string>>;
+    value: string;
+}
+
+export default function Editor(props: EditorProps) {
+    const { setValue, value } = props;
+
     const onChange = useCallback((val: SetStateAction<string>, viewUpdate: any) => {
         console.log('val:', val);
         setValue(val);

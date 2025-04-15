@@ -69,22 +69,21 @@ export default function Field(props: FieldProps) {
 
     const animate = () => {
         const timestamp = Date.now();
-        if (timestamp > lastTimestamp + 10) {
-            let deltaTime = (timestamp - lastTimestamp) / 0.1;
-            let robotXAdd = (A + B + C + D) / deltaTime;
-            let robotYAdd = (A - B - C + D) / deltaTime;
+        let deltaTime = (timestamp - lastTimestamp) / 0.1;
+        let robotXAdd = (A + B + C + D) / deltaTime;
+        let robotYAdd = (A - B - C + D) / deltaTime;
 
-            robotXAdd = isNaN(robotXAdd) ? 0 : robotXAdd;
-            robotYAdd = isNaN(robotYAdd) ? 0 : robotYAdd;
-            robotX += robotXAdd;
-            robotY += robotYAdd;
+        robotXAdd = isNaN(robotXAdd) ? 0 : robotXAdd;
+        robotYAdd = isNaN(robotYAdd) ? 0 : robotYAdd;
+        robotX += robotXAdd;
+        robotY += robotYAdd;
 
-            robotX = robotX >= (fieldWidth - 50) ? fieldWidth - 50 : robotX <= 50 ? 50 : robotX;
-            robotY = robotY >= (fieldHeight - 50) ? fieldHeight - 50 : robotY <= 50 ? 50 : robotY;
-            draw();
-        }
-        lastTimestamp = timestamp;
+        robotX = robotX >= (fieldWidth - 50) ? fieldWidth - 50 : robotX <= 50 ? 50 : robotX;
+        robotY = robotY >= (fieldHeight - 50) ? fieldHeight - 50 : robotY <= 50 ? 50 : robotY;
+
+        draw();
         requestAnimationFrame(animate);
+        lastTimestamp = timestamp;
     }
 
     useEffect(() => {
